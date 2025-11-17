@@ -1,0 +1,61 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+"""
+Python Calculator V1
+Simple interactive calculator with formatted numeric output.
+
+Features:
+- operations: +, -, *, /
+- error handling: empty input, invalid operator, division by zero
+- formatting: thin spaces, trimmed zeros, clean integers
+"""
+
+sep = "\u2009"  # thin space
+
+def format_number(value):
+    if value % 1 == 0:
+        result = f"{value:,.0f}"
+    else:
+        result = f"{value:,.5f}".rstrip("0").rstrip(".")
+    return result.replace(",", sep)
+
+def main():
+    print("Простой калькулятор (+ - * /). Пустой ввод на любом шаге — выход.")
+
+    while True:
+        a_str = input("a: ")
+        if a_str == "":
+            break
+        a = float(a_str)
+
+        op = input("op: ")
+        if op == "":
+            break
+        if op not in ["+", "-", "/", "*"]:
+            print("Ошибка: неизвестный оператор")
+            continue
+
+        b_str = input("b: ")
+        if b_str == "":
+            break
+        b = float(b_str)
+
+        if op == "/" and b == 0:
+            print("Ошибка: деление на ноль")
+            continue
+
+        if op == "+":
+            value = a + b
+        elif op == "-":
+            value = a - b
+        elif op == "*":
+            value = a * b
+        elif op == "/":
+            value = a / b
+
+        result = format_number(value)
+        print("= ", result)
+
+if __name__ == "__main__":
+    main()
